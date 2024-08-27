@@ -19,6 +19,10 @@ namespace PDF417IssueReproduction
             File.Delete(filename);
         }
 
+        /// <summary>
+        /// NOTE: With the original test string (first test case, failing), we are able to take that text, paste it into https://orcascan.com/tools/free-barcode-generator/pdf417. After doing so, it is able to be read both by the iOS app we are using, and by uploading a PNG of it to https://zxing.org/w/decode.jspx
+        /// </summary>
+        /// <param name="barcodeInput"></param>
         [TestCase("V01~A01|D01~T5J3S4|R01~ACME WIDGET SUPPLY|R02~|R03~|R04~5995 AVEBURY DRIVE|R05~|R06~MISSISSAUGA|R07~L5R3T8|S01~555000777|S02~555000999|S03~|S04~|S05~|S06~|S07~|S08~20140611|S09~2|S10~5|S11~500|S12~3000|S13~50|S14~TOR|S15~|B01~FRE|B02~PP")] // original string, fails
         [TestCase("Test Test Test")] // Passes
         [TestCase("AAAAAAAAAA AAAAAAAAAA AAAAAAAAAA AAAAAAAAAA")] // Passes
@@ -31,7 +35,6 @@ namespace PDF417IssueReproduction
         [TestCase("R07~L5R3T8")] // the "offending" piece seems to be fine on its own
         [TestCase("V01~A01|D01~T5J3S4|R01~ACME WIDGET SUPPLY|R02~|R03~|R04~5995 AVEBURY DRIVE|R05~|R06~MISSISSAUGA|S01~555000777|S02~555000999|S03~|S04~|S05~|S06~|S07~|S08~20140611|S09~2|S10~5|S11~500|S12~3000|S13~50|S14~TOR|S15~|B01~FRE|B02~PP")] // still fails if we cut out the R07 piece. Pointing to a length issue or data compaction issue?
         [TestCase("V01A01D01T5J3S4R01ACME WIDGET SUPPLYR02R03R045995 AVEBURY DRIVER05R06MISSISSAUGAR07L5R3T8S01555000777S02555000999S03S04S05S06S07S0820140611S092S105S11500S123000S1350S14TORS15B01FREB02PP")] // without tildes and pipe characters, original also fails
-
         public void PDF417ConversionTests(string barcodeInput)
         {
             // Trial key -- Iron Software can revoke as desired.
